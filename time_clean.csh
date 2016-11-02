@@ -31,10 +31,10 @@ set run_restart = 0
 set restart_channel = 1
 set run_clean = 1
 set run_restor = 1
-set cutoff = 10
-set gain = 0.1
-#set polygon_region = 'region_nro.txt'
-set polygon_region = 'box_north.txt'
+set cutoff = 3
+set gain = 0.3
+set polygon_region = 'region_nro.txt'
+#set polygon_region = 'box_north.txt'
 #set polygon_region = '42_region.txt'
 set region_limit = 0
 set options="double,systemp,mosaic"
@@ -74,10 +74,10 @@ endif
 set vis = $carvis,$nrovis
 
 time images_line_isella.csh imsize=$imsize niter=$niter gain=$gain run_mkmask=$run_mkmask mkmask_dummy=$mkmask_dummy run_restart=$run_restart cutoff=$cutoff polygon_region=$polygon_region restart_channel=$restart_channel run_invert=$run_invert run_clean=$run_clean run_restor=$run_restor robust=$robust vis=$vis dirty_name=$dirty_name options=$options region_limit=$region_limit different_beam=$different_beam use_psf_as_beam=$use_psf_as_beam cell=$cell algorithm=$algorithm #select=$select #source=$source
-rm -rf 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north
-mv 13co/13co.001/ 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north
+rm -rf 13co/13co.001_all.full.1e7iters.cutoff3sig.box_nro.gain0.3
+mv 13co/13co.001/ 13co/13co.001_all.full.1e7iters.cutoff3sig.box_nro.gain0.3
 #mv 13co/13co.002/ 13co/13co.002_all.full.1e8iters
 #fits in=13co/13co.002_all.full.1e8iters/13co.002.map out=13co/baseline_test/all.full.1e8iters.map.fits op=xyout
 #fits in=13co/13co.002_all.full.1e8iters/13co.002.cm out=13co/baseline_test/all.full.1e8iters.cm.fits op=xyout
 
-echo "1e7 iterations of mossdi finished at 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north,  started 9:50pm September 7." | mail -a 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north/13co.001.ccflux.pdf -s "CLEAN Finished" jesse.feddersen@yale.edu
+echo "1e7 iterations of mossdi finished at 13co/13co.001_all.full.1e7iters.cutoff3sig.box_nro.gain0.3,  started 5:38pm September 12." | mail -a 13co/13co.001_all.full.1e7iters.cutoff3sig.box_nro.gain0.3/13co.001.ccflux.pdf -s "CLEAN Finished" jesse.feddersen@yale.edu
