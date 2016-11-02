@@ -1,2 +1,2 @@
-time fluxscale_jrf.csh nroorg=../13co/nro_13co_dv0.2kms caruv=13co/orion.D.narrow.mir,13co/orion.E.narrow.mir carmap=carma_full_163.164.map_test carbeam=carma_full_163.164.beam_test nromap=nro_full_163.164.map_test nrobeam=nro_full_163.164.beam_test nrod=nro/13co/fluxscale_full_163.164_test 
-
+#!/bin/csh
+fluxscale_jrf.csh nroorg=../13co/13CO_20161011_FOREST-BEARS_xyb_spheroidal_dV0.11kms_YS caruv=../vis/13co/orion.D.narrow.mir,../vis/13co/orion.E.narrow.mir carmap=carma_fluxscale_119.120.map carbeam=carma_fluxscale_119.120.beam nromap=nro_fluxscale_119.120.map nrobeam=nro_fluxscale_119.120.beam nrod=nro/13co/fluxscale_119.120

@@ -39,11 +39,17 @@ cmap = mpl.cm.jet
 
 # colors = ['black', 'red', 'blue', 'green']
 
+def main():
+    plot_histogram(ratio_root_name="ratio_fluxscale_119.120",
+     cutoff_list=[5,10,20,50,60,70], channel_list=[119,120],
+      out="ratio_hist.png", verbose=True, plot_medians=False,
+      hist_ylim=[0,4.5])
 
-def plot_histogram(ratio_root_name='ratio_full_nrocutoff.map.fits', cutoff_list=[5, 10, 15, 20, 25], channel_list=[155, 156, 163, 164, 171, 172, 186, 187],
+def plot_histogram(ratio_root_name='ratio_fluxscale_119.120', cutoff_list=[5, 10, 15, 20, 25], channel_list=[155, 156, 163, 164, 171, 172, 186, 187],
                    out='ratio_hist.png', ratio_max=None,
                    ra_region=ra_region, dec_region=dec_region,
-                   only_positive=False, plot_medians=True, n_bins=50):
+                   only_positive=False, plot_medians=True, n_bins=50, verbose=False,
+                   histrange=(-1,3), hist_xlim=[-1,3], hist_ylim=[0,3]):
     """Plot a histogram of CARMA/NRO ratio values
 
     Parameters
@@ -66,6 +72,8 @@ def plot_histogram(ratio_root_name='ratio_full_nrocutoff.map.fits', cutoff_list=
         Description
     plot_medians : bool, optional
         Description
+    verbose : bool, optional
+        Print out debug messages.
 
     Deleted Parameters
     ------------------
@@ -88,7 +96,8 @@ def plot_histogram(ratio_root_name='ratio_full_nrocutoff.map.fits', cutoff_list=
         i_color += 1
         # Grab all images with this cutoff.
         ratio_image_list = glob.glob(
-            ratio_root_name[:10] + '*' + '_' + str(cutoff) + ratio_root_name[10:])
+            ratio_root_name + '*' + str(cutoff) + '*.fits')
+        if verbose: print(ratio_image_list)
 
         # The master array of all ratios for this cutoff value.
         good_ratio_all = np.array([])
@@ -110,41 +119,48 @@ def plot_histogram(ratio_root_name='ratio_full_nrocutoff.map.fits', cutoff_list=
                         ratio > -1. * ratio_max) & (ratio < ratio_max)
                 else:
                     boolean_crd = np.isfinite(ratio)
-                if only_positive == True:
+                if only_positive is True:
                     boolean_crd = (ratio >= 0) & (boolean_crd)
 
                 #==============Region masking========================
+                if (ra_region is not None and dec_region is not None):
+                    w = WCS(ratio_image).dropaxis(3).dropaxis(2)
+                    lx, ly = ratio.shape[1], ratio.shape[0]
+                    X, Y = np.ogrid[0:lx, 0:ly]
+                    boolean_region = (np.isnan(X)) & (np.isnan(Y))
+                    for ra, dec in zip(ra_region, dec_region):
 
-                w = WCS(ratio_image).dropaxis(3).dropaxis(2)
-                lx, ly = ratio.shape[1], ratio.shape[0]
-                X, Y = np.ogrid[0:lx, 0:ly]
-                boolean_region = (np.isnan(X)) & (np.isnan(Y))
-                for ra, dec in zip(ra_region, dec_region):
+                        x, y = w.wcs_world2pix(ra, dec, 0)
+                        new_boolean_region = (X > x[0]) & (
+                            X < x[1]) & (Y > y[0]) & (Y < y[1])
+                        boolean_region = boolean_region | new_boolean_region
 
-                    x, y = w.wcs_world2pix(ra, dec, 0)
-                    new_boolean_region = (X > x[0]) & (
-                        X < x[1]) & (Y > y[0]) & (Y < y[1])
-                    boolean_region = boolean_region | new_boolean_region
+                    # boolean_crd = boolean_region & boolean_crd
+                    boolean_crd = np.swapaxes(boolean_region, 0, 1) & boolean_crd
 
-                # boolean_crd = boolean_region & boolean_crd
-                boolean_crd = np.swapaxes(boolean_region, 0, 1) & boolean_crd
                 crd = np.where(boolean_crd)
                 good_ratio = ratio[crd]
                 good_ratio_all = np.append(good_ratio_all, good_ratio)
 
         median_ratio = np.median(good_ratio_all)
         n_ratio = np.size(good_ratio_all)
-        ax.set_xlabel = 'CARMA/NRO'
-        ax.set_ylabel = 'Normalized count'
+        print(n_ratio, median_ratio)
+        
+        ax.set_xlim(hist_xlim)
+        ax.set_ylim(hist_ylim)
+        
 
         ax.hist(good_ratio_all, bins=n_bins, normed=True, histtype='step',
-                color=cmap(i_color / float(n_colors)), label='Flux_NRO > ' + str(cutoff) + ' (' + str(n_ratio) + ' points)' + ' median = ' + str(np.around(median_ratio, 2)))
+                color=cmap(i_color / float(n_colors)), range=histrange,
+                label='Flux_NRO > ' + str(cutoff) + ' (' + str(n_ratio) + ' points)' + ' median = ' + str(np.around(median_ratio, 2)))
         if plot_medians:
             ax.plot([median_ratio, median_ratio], [0, 1.],
                     color=cmap(i_color / float(n_colors)))
-
+    
+    plt.xlabel('CARMA/NRO')
+    plt.ylabel('Normalized count')
     ax.legend(prop={'size': 10})
-    plt.show()
+    #plt.show()
     plt.savefig(out)
 
 
@@ -318,3 +334,6 @@ def plot_radec(ratio_image_list, out='ratio.png', cutoff=None,
     axarr[0].legend(prop={'size': 6})
     plt.show()
     plt.savefig(out)
+
+if __name__ == "__main__":
+    main()

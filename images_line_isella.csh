@@ -389,7 +389,7 @@
        echo ""
        echo ""
 
-       # Plot the flux recovered by CLEAN vs the number of clean iterations used.a
+       # Plot the flux  recovered by CLEAN vs the number of clean iterations used.a
        if ($plot_ccflux == 1) then
          echo "Plotting cc vs. flux..."
          set infile = $outfile.$cclogfile
