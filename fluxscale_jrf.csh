@@ -1,4 +1,4 @@
-#!/bin/csh -fe
+#!/bin/csh
 #
 # Establish the fluxscale factor for the NRO image
 # 
@@ -30,8 +30,8 @@
   set use6m6m   = 1
 
 # Set which source to image
-  set coords = "dec(-6.5,-4)"
-  set source = "omc43"
+  set coords = "dec(-8,-4)"
+  set source = "omc32,omd33,omc42,omc43,omc53,omc54"
   #set source = "omc32,omc33,omc42,omc43,omc53,omc54,omc65,omc66,omc22,omc23"
   #set source = @nro_subregions.txt
 
@@ -68,7 +68,8 @@
 # The resampled NRO data do not look correct if nchannel=1
 # jjjjjChannels set first and last channel to use.
   #set chan = (171 172) 
-  set chan = (163 164)
+  #set chan = (163 164) #Previous 13CO cube channels @ 10 km/s
+  set chan = (119 120) #13CO 20161011_FOREST-BEARS channels @ 10 km/s
   ## set line = "velocity,2,8.0,0.264,0.264"
 
 # Set NRO file names
@@ -103,7 +104,7 @@
   set nxnro    = `imhead in="$nroorg" key="naxis1" | awk '{printf("%i",$1)}'`
   set nynro    = `imhead in="$nroorg" key="naxis2" | awk '{printf("%i",$1)}'`
   set nznro    = `imhead in="$nroorg" key="naxis3" | awk '{printf("%i",$1)}'`
-  set v1nro    = `imhead in="$nroorg" key="crval3" | awk '{printf("%i",$1)}'`
+  set v1nro    = `imhead in="$nroorg" key="crval3" | awk '{printf("%f",$1)}'`
   set cellnro  = `imhead in="$nroorg" key="cdelt2" | awk '{printf("%f",$1*206264.8)}'`
   set dvnro    = `imhead in="$nroorg" key="cdelt3" | awk '{printf("%f",$1)}'`
 
@@ -170,15 +171,29 @@
   echo "*** Loading miriad version miriad_64 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /scr/carmaorion/sw/miriad_64/miriad_start.csh
+  echo "Passed first .cshrc source"
+
+  #Source miriad_start.csh mysteriously halts this script, so I copied the contents of 
+  #miriad_start.csh below.
+
+  #setenv MIR /home/jrf57/miriad_64
+  #echo "Passed setenv"
+  #source $MIR/MIRRC.linux
+  #echo "Passed source $MIR/MIRRC.linux"
+  #setenv PATH /home/jrf57/miriad_64/bin/linux:$PATH
+
+  source ~/miriad_64/miriad_start.csh
+  #load_miriad64
+  echo "Passed first miriad source."
 
 # Make CARMA image, if needed
   if ($makeImage != 0) then
+     if $verb echo "Inverting CARMA image and beam."
      # Make image
        rm -rf $carmap $carbeam
        invert vis=$caruvavg map=$carmap beam=$carbeam \
               select="source($source)" \
-              imsize=$imsize  cell=$cell robust=$robust options=$options
+              imsize=$imsize cell=$cell robust=$robust options=$options
   endif
 
   if ($caronly == 1) exit 
@@ -192,7 +207,8 @@
   echo "*** Loading miriad version miriad_64 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /scr/carmaorion/sw/miriad_64/miriad_start.csh
+  source /home/jrf57/miriad_64/miriad_start.csh
+  #load_miriad64
 
 # Set NRO45 observing parameters
   source nroParams_jrf.csh
@@ -259,7 +275,9 @@
   echo "*** Loading miriad version 4.3.8 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /scr/carmaorion/sw/miriad-4.3.8/miriad_start.csh
+  source /home/jrf57/miriad-4.3.8/miriad_start.csh
+
+  #load_miriad
 
 # Next, we generate the NRO uv data. We do this one primary beam type
 # at a time, since miriad will not get the jyperk factors correct 
@@ -365,8 +383,8 @@
   echo "*** Loading miriad version miriad_64 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /scr/carmaorion/sw/miriad_64/miriad_start.csh
-
+  source /home/jrf57/miriad_64/miriad_start.csh
+  #load_miriad64
 # Dirty image for check
   if (-e $nromap)  rm -rf $nromap
   if (-e $nrobeam) rm -rf $nrobeam
