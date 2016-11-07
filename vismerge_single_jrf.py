@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 import vismerge
 import sys
 
 argvs = sys.argv
 # Usage : python vismerge_single.py inpdir out outdir
 if (len(argvs) != 4):
-    print "Usage: $python %s inpdir out outdir" % (argvs[0])
+    print("Usage: $python %s inpdir out outdir" % (argvs[0]))
     sys.exit()
 
 inpdir = argvs[1]

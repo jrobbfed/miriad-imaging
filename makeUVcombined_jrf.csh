@@ -14,7 +14,7 @@
 #   hkrandom: cd $MIR/src/spec/hkmiriad; debug hkrandom
   alias MATH 'set \!:1 = `echo "\!:3-$" | bc -l`'
 
-  set vismerge_single_path = '/hifi/carmaorion/orion/images/script/vismerge_single.py'
+  set vismerge_single_path = '/net/arce/jrf57/miriad-imaging/vismerge_single_jrf.py'
 
 # Molecule name - required
   set verb = 1
@@ -38,18 +38,21 @@
 
   set imsize  = 257
   set cell    = 1.0
-  set robust  = 0
+  set robust  = 2
   set options = "mosaic,double,systemp"
 
 # Set velocity to image
-  set source = "omc42"
+  set source = 'omc*'
   set select = "source($source),dec(-10,-3)"
+  #echo '$select'
 #  set source = @nro_subregions.txt
-  set chan = (171 172)
+  set chan = (119 120)
   # set vel    = "9.5"
 # Set 
   set uvflag = 1
   set uvselect = "uvrange(6,1000.0)"
+
+  set nrod = "nro/$mol"
 
 # End of user-supplied arguments
 #############################################################################
@@ -89,10 +92,10 @@
   echo "*** Loading miriad version 4.3.9 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /scr/carmaorion/sw/miriad_64/miriad_start.csh
+  source /net/arce/jrf57/miriad_64/miriad_start.csh
 
 # Set file names
-  set nrod    = "nro/$mol"
+ # set nrod    = "nro/$mol"
   set nrodtmp = "$nrod/tmp"
   set nrofch  = "$nrodtmp/$mol$chan[1]_$chan[2]"chan
 
@@ -133,11 +136,13 @@
 
 # Set source to all sources
   if $verb echo "Setting sources..."
-  set source_orig = $source
+  set source_orig = '$source'
   if ($source_orig == "") then
      set source = "omc*"
+     set select = "source($source),dec(-10,-3)"
   endif
   if $verb echo "Passed source_orig..."
+  if $verb echo "Now source is $source"
 
 # Make directories
   if (!(-e $nrod))     mkdir -p $nrod
@@ -267,7 +272,7 @@ calculation:
   echo "*** Loading miriad version 4.3.8 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /scr/carmaorion/sw/miriad-4.3.8/miriad_start.csh
+  source /net/arce/jrf57/miriad-4.3.8/miriad_start.csh
 
 # Multiply psuede 2'-FWHM primary beam with NRO45 at each CARMA
   set tmpuv = tmptmp.uv

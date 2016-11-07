@@ -1,9 +1,21 @@
+#! /bin/csh -f
 #set uvselect = "uvrange(6,1000.0)"
 set uvflag = 1
-#select = "source(omc42),dec(-10,-3)"
-source makeUVcombined_jrf.csh carmap='carma_42_171.172_cell1rob2imsize257.map' carbeam='carma_42_171.172_cell1rob2imsize257.beam' makeImage=1 cell=1 imsize=257 robust=2 uvflag=$uvflag #select=$select #uvselect=$uvselect 
+set nroorg = /net/arce/jrf57/13co/13CO_20161011_FOREST-BEARS_xyb_spheroidal_dV0.11kms_YS
+set nroparams = /net/arce/jrf57/miriad-imaging/nroParams_jrf_nosigk.csh
+set makeImage = 1
+set remakeBeam = 1
+set caruv = /net/arce/jrf57/vis/13co/orion.D.narrow.mir,/net/arce/jrf57/vis/13co/orion.E.narrow.mir
+set carmap = 'carma_full_119.120.map'
+set carbeam = 'carma_full_119.120.beam'
 
-rm -rf nro/13co/13co.carmacell1_uv6to1000_nrobm16.all
-rm -rf nro/13co/carma_carmacell1_uv6to1000_nrobm16.mir
-mv nro/13co/13co.uv.all nro/13co/13co.carmacell1_uv6to1000_nrobm16.all
-mv nro/13co/carma_uv.mir nro/13co/carma_carmacell1_uv6to1000_nrobm16.mir
+set cell = 1
+set imsize = 257
+set robust = 2
+
+set nrod = "nro/13co_nosigk_tintnro0.01"
+
+source makeUVcombined_jrf.csh carmap=$carmap carbeam=$carbeam \
+makeImage=$makeImage cell=$cell imsize=$imsize robust=$robust uvflag=$uvflag nroorg=$nroorg \
+nroparams=$nroparams caruv=$caruv nrod=$nrod
+

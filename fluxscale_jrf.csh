@@ -31,7 +31,7 @@
 
 # Set which source to image
   set coords = "dec(-8,-4)"
-  set source = "omc32,omd33,omc42,omc43,omc53,omc54"
+  set source = "omc32,omc33,omc42,omc43,omc53,omc54"
   #set source = "omc32,omc33,omc42,omc43,omc53,omc54,omc65,omc66,omc22,omc23"
   #set source = @nro_subregions.txt
 
@@ -176,11 +176,11 @@
   #Source miriad_start.csh mysteriously halts this script, so I copied the contents of 
   #miriad_start.csh below.
 
-  #setenv MIR /home/jrf57/miriad_64
+  #setenv MIR /net/arce/jrf57/miriad_64
   #echo "Passed setenv"
   #source $MIR/MIRRC.linux
   #echo "Passed source $MIR/MIRRC.linux"
-  #setenv PATH /home/jrf57/miriad_64/bin/linux:$PATH
+  #setenv PATH /net/arce/jrf57/miriad_64/bin/linux:$PATH
 
   source ~/miriad_64/miriad_start.csh
   #load_miriad64
@@ -207,7 +207,7 @@
   echo "*** Loading miriad version miriad_64 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /home/jrf57/miriad_64/miriad_start.csh
+  source /net/arce/jrf57/miriad_64/miriad_start.csh
   #load_miriad64
 
 # Set NRO45 observing parameters
@@ -275,7 +275,7 @@
   echo "*** Loading miriad version 4.3.8 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /home/jrf57/miriad-4.3.8/miriad_start.csh
+  source /net/arce/jrf57/miriad-4.3.8/miriad_start.csh
 
   #load_miriad
 
@@ -383,7 +383,7 @@
   echo "*** Loading miriad version miriad_64 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /home/jrf57/miriad_64/miriad_start.csh
+  source /net/arce/jrf57/miriad_64/miriad_start.csh
   #load_miriad64
 # Dirty image for check
   if (-e $nromap)  rm -rf $nromap

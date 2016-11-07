@@ -33,7 +33,7 @@
   echo "*** Loading miriad version 4.3.8 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /home/jrf57/miriad-4.3.8/miriad_start.csh
+  source /net/arce/jrf57/miriad-4.3.8/miriad_start.csh
 
 # Set map name and beam size
 # see NRO homepage, http://www.nro.nao.ac.jp/~nro45mrt/html/prop/eff/eff2014.html
@@ -95,7 +95,7 @@
   echo "*** Loading miriad version 4.3.9 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /home/jrf57/miriad_64/miriad_start.csh
+  source /net/arce/jrf57/miriad_64/miriad_start.csh
 
 # Convolve gaussian with spheroidal
   convol map=$bmsph beam=$bmgau out=tmptmp.mir

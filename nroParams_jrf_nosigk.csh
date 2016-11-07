@@ -37,10 +37,10 @@
   set tsyscarma  = "" 
 # set tsysnro    = 1      # no physical meaning
 # set tsysnro    = 50     # extram case
-  set sigk       = "0.3"  # noise level of 45m map. also can used for changing weighting.
+  set sigk       = ""  # noise level of 45m map. also can used for changing weighting.
 
 # NRO45 uv params
-  set tintnro      = 0.001     # Integration time for NRO45 visibility ; default in Koda et al. (2011) is 0.01
+  set tintnro      = 0.01     # Integration time for NRO45 visibility ; default in Koda et al. (2011) is 0.01
 
 # Parameters from NRO45 map
   set nxnro    = `imhead in="$nroorg" key="naxis1" | awk '{printf("%i",$1)}'`
