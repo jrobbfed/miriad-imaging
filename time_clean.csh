@@ -1,16 +1,17 @@
+#! /bin/csh -f
 #Use miriad-4.3.9 
 #source miriad_64/miriad_start.csh
 #
-set niter=2000000
-set run_invert = 0
-set algorithm = "mossdi"
+set niter=1000000
+set run_invert = 1
+set algorithm = "mossdi2"
 #se1 vis = "nro/13co/carma_uv_full_171.172_scalefactor.mir,nro/13co/13co.uv_full_171.172_scalefactor.all"
 #set vis = "nro/13co/carma_uv_42_171.172_scalefactor.mir,nro/13co/13co.uv_42_171.172_scalefactor.mir"
 
 #set carvis = "nro/13co/carma_carmacell0.5_uv6to1000_nrobm16_imsize200.mir"
 #set nrovis = "nro/13co/13co.carmacell1_uv6to1000_nrobm16_imsize200.all"
-set carvis = "nro/13co/carma_uv_full_171.172_scalefactor.mir"
-set nrovis = "nro/13co/13co.uv_full_171.172_scalefactor.all"
+set carvis = "nro/13co/carma_uv.mir"
+set nrovis = "nro/13co/13co.uv.all"
 #set carvis = "nro/13co/carma_carmacell1_uv6to1000_nrobm16.mir"
 #set nrovis = "nro/13co/13co.carmacell1_uv6to1000_nrobm16.all"
 
@@ -20,18 +21,18 @@ set nrovis = "nro/13co/13co.uv_full_171.172_scalefactor.all"
 #set dirty_name = 'carmaonly_noscalefactor'
 #set dirty_name = 'omc_full_mosaic.double.systemp_171.172'
 #set dirty_name = 'combined_cell1rob2_uv6to1000_nrobm16_not10m10m'
-set dirty_name = 'combined_all_full'
-set source = ''
+set dirty_name = 'combined_119.120_full_newNRO'
+#set source = ''
 set robust = 2
 set cell = 1
 set imsize = 257 
-set run_mkmask = 1
+set run_mkmask = 0
 set mkmask_dummy = 0
 set run_restart = 0
 set restart_channel = 1
 set run_clean = 1
-set run_restor = 0
-set cutoff = 0.1
+set run_restor = 1
+set cutoff = 5
 set gain = 0.1
 set polygon_region = 'nro_region.txt'
 #set polygon_region = 'box_small.txt'
@@ -75,6 +76,4 @@ endif
 set vis = $carvis,$nrovis
 
 time images_line_isella.csh imsize=$imsize niter=$niter gain=$gain run_mkmask=$run_mkmask mkmask_dummy=$mkmask_dummy run_restart=$run_restart cutoff=$cutoff polygon_region=$polygon_region restart_channel=$restart_channel run_invert=$run_invert run_clean=$run_clean run_restor=$run_restor robust=$robust vis=$vis dirty_name=$dirty_name options=$options region_limit=$region_limit different_beam=$different_beam use_psf_as_beam=$use_psf_as_beam cell=$cell algorithm=$algorithm #select=$select #source=$source
-rm -rf 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north
-mv 13co/13co.001/ 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north
-echo "1e7 iterations of mossdi finished at 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north,  started 9:50pm September 7." | mail -a 13co/13co.001_all.full.1e7iters.cutoff10sig.box_north/13co.001.ccflux.pdf -s "CLEAN Finished" jesse.feddersen@yale.edu
+mv 13co/13co.001 13co/13co.001_119.120_full_newNRO_1e6

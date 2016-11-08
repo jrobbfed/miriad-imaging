@@ -1,4 +1,4 @@
-#! /bin/csh -f
+#! /bin/csh -fe
 #
 # Version: 3     2010.03.13  J.Koda  Clean up and add comments
 # Version: 4     2010.11.25  J.Koda  Change to keep input CARMA UV intact
@@ -139,8 +139,8 @@
   set source_orig = '$source'
   if ($source_orig == "") then
      set source = "omc*"
-     set select = "source($source),dec(-10,-3)"
   endif
+  set select = "source($source),dec(-10,-3)"
   if $verb echo "Passed source_orig..."
   if $verb echo "Now source is $source"
 
@@ -341,7 +341,7 @@ calculation:
 # Combine all UV data
   if (-e $nrod/$nrod.uv.all) rm -rf $nrod/$nrod.uv.all
   echo "Running vismerge..."
-  python $vismerge_single_path $nrodtmp $mol $nrod
+  $vismerge_single_path $nrodtmp $mol $nrod
 
 # Clean up
 # foreach f ($nrodem*)

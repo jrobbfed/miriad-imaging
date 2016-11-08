@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/python
 import vismerge
 import sys
 
