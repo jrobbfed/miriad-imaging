@@ -2,7 +2,7 @@
 #Use miriad-4.3.9 
 #source miriad_64/miriad_start.csh
 #
-set niter=1000000
+set niter=10000000
 set run_invert = 1
 set algorithm = "mossdi2"
 #se1 vis = "nro/13co/carma_uv_full_171.172_scalefactor.mir,nro/13co/13co.uv_full_171.172_scalefactor.all"
@@ -10,8 +10,8 @@ set algorithm = "mossdi2"
 
 #set carvis = "nro/13co/carma_carmacell0.5_uv6to1000_nrobm16_imsize200.mir"
 #set nrovis = "nro/13co/13co.carmacell1_uv6to1000_nrobm16_imsize200.all"
-set carvis = "nro/13co_tintnro0.01_testregion/carma_uv.mir"
-set nrovis = "nro/13co_tintnro0.01_testregion/13co.uv.all"
+set carvis = "nro/13co_full/carma_uv.mir"
+set nrovis = "nro/13co_full/13co.uv.all"
 #set carvis = "nro/13co/carma_carmacell1_uv6to1000_nrobm16.mir"
 #set nrovis = "nro/13co/13co.carmacell1_uv6to1000_nrobm16.all"
 
@@ -21,7 +21,7 @@ set nrovis = "nro/13co_tintnro0.01_testregion/13co.uv.all"
 #set dirty_name = 'carmaonly_noscalefactor'
 #set dirty_name = 'omc_full_mosaic.double.systemp_171.172'
 #set dirty_name = 'combined_cell1rob2_uv6to1000_nrobm16_not10m10m'
-set dirty_name = 'combined_119.120_testregion_newNRO'
+set dirty_name = 'combined_119.120_full_newNRO_robust2'
 #set source = ''
 set robust = 2
 set cell = 1
@@ -76,4 +76,4 @@ endif
 set vis = $carvis,$nrovis
 
 time images_line_isella.csh imsize=$imsize niter=$niter gain=$gain run_mkmask=$run_mkmask mkmask_dummy=$mkmask_dummy run_restart=$run_restart cutoff=$cutoff polygon_region=$polygon_region restart_channel=$restart_channel run_invert=$run_invert run_clean=$run_clean run_restor=$run_restor robust=$robust vis=$vis dirty_name=$dirty_name options=$options region_limit=$region_limit different_beam=$different_beam use_psf_as_beam=$use_psf_as_beam cell=$cell algorithm=$algorithm #select=$select #source=$source
-mv 13co/13co.001 13co/13co.001_119.120_testregion_newNRO_1e6
+mv 13co/13co.001 13co/13co.001_119.120_full_newNRO_1e7_robust2

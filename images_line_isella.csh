@@ -45,7 +45,7 @@
   set robust = 2
   set cell   = 1.0
   set imsize = 257
-  set options = "mosaic, double" 
+  set options = "mosaic,double" 
   set select = "dec(-10,-3)"
 
   set different_beam = 0
@@ -138,6 +138,7 @@
            echo ""
            echo ""
            echo "*** Making $dirtyImage and $dirtyBeam ***"
+           echo $select
            invert vis=$vis map=$dirtyImage beam=$dirtyBeam \
                     select=$select \
                     cell=$cell \
