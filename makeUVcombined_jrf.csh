@@ -207,10 +207,11 @@
   endif
 
 # Remake NRO beam
-if ($remakeBeam != 0) then
+  if ($remakeBeam != 0) then
     echo "Remaking NRO beam..."
-    makeBeam_jrf.csh mol=$mol carmap=$carmap
+    source makeBeam_jrf.csh mol=$mol carmap=$carmap
 #  set bmnro = "beamsNRO/$mol/beamnro.bm"
+  endif
 
 
 # Regrid wrt CARMA map
