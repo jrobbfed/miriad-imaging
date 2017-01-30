@@ -14,7 +14,7 @@
 #   hkrandom: cd $MIR/src/spec/hkmiriad; debug hkrandom
   alias MATH 'set \!:1 = `echo "\!:3-$" | bc -l`'
 
-  set vismerge_single_path = '../script/vismerge_single_jrf.py'
+  set vismerge_single_path = 'vismerge_single_jrf.py'
 
 # Molecule name - required
   set verb = 1
