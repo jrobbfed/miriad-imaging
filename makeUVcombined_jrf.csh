@@ -14,7 +14,7 @@
 #   hkrandom: cd $MIR/src/spec/hkmiriad; debug hkrandom
   alias MATH 'set \!:1 = `echo "\!:3-$" | bc -l`'
 
-  set vismerge_single_path = '/net/arce/jrf57/miriad-imaging/vismerge_single_jrf.py'
+  set vismerge_single_path = '../script/vismerge_single_jrf.py'
 
 # Molecule name - required
   set verb = 1
@@ -46,7 +46,7 @@
   set select = "source($source),dec(-10,-3)"
   #echo '$select'
 #  set source = @nro_subregions.txt
-  set chan = (119 120)
+  set chan = (30 190)
   # set vel    = "9.5"
 # Set 
   set uvflag = 1
@@ -92,7 +92,8 @@
   echo "*** Loading miriad version 4.3.9 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /net/arce/jrf57/miriad_64/miriad_start.csh
+  load_miriad64 
+#  source net/arce/jrf57/miriad_64/miriad_start.csh
 
 # Set file names
  # set nrod    = "nro/$mol"
@@ -206,10 +207,11 @@
   endif
 
 # Remake NRO beam
-if ($remakeBeam != 0) then
+  if ($remakeBeam != 0) then
     echo "Remaking NRO beam..."
-    makeBeam_jrf.csh mol=$mol carmap=$carmap
+    source makeBeam_jrf.csh mol=$mol carmap=$carmap
 #  set bmnro = "beamsNRO/$mol/beamnro.bm"
+  endif
 
 
 # Regrid wrt CARMA map
@@ -272,7 +274,8 @@ calculation:
   echo "*** Loading miriad version 4.3.8 ***"
   echo ""
   source ~/.cshrc startMiriad=0
-  source /net/arce/jrf57/miriad-4.3.8/miriad_start.csh
+  load_miriad
+#  source /net/arce/jrf57/miriad-4.3.8/miriad_start.csh
 
 # Multiply psuede 2'-FWHM primary beam with NRO45 at each CARMA
   set tmpuv = tmptmp.uv
